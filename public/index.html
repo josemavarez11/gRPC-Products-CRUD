@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Products CRUD</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="icon.png" type="image/x-icon">
+  </head>
+  <body>
+    <div id="container">
+      <h1>Products Management using Microservices</h1>
+      <div id="input-container">
+        <input type="text" id="description-input" placeholder="Enter description">
+        <button id="add-btn">Add</button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Description</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+      <div id="update-container">
+        <input type="text" id="update-description-input">
+        <button id="update-btn">Update</button>
+        <button id="cancel-btn">Cancel</button>
+      </div>
+    </div>
+    <script type="module" src="script.js"></script>
+    <!-- <script src="script.js"></script> -->
+  </body>
+</html>

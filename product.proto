@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+service ProductService {
+    rpc create(CreateProductRequest) returns (Empty) {}
+    rpc read(Empty) returns (ProductsList) {}
+    rpc update(UpdateProductRequest) returns (Empty) {}
+    rpc delete(DeleteProductRequest) returns (Empty) {}
+}
+
+message Product {
+    int32 id = 1;
+    string description = 2;
+}
+
+message Empty {}
+
+message ProductsList {
+    repeated Product product = 1;
+}
+
+message CreateProductRequest {
+    string description = 1;
+}
+
+message DeleteProductRequest {
+    int32 id = 1;
+}
+
+message UpdateProductRequest {
+    int32 id = 1;
+    string description = 2;
+}
