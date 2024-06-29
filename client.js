@@ -14,6 +14,6 @@ var packageDefinition = loadSync(PROTO_PATH, options);
 const ProductService = loadPackageDefinition(packageDefinition).ProductService;
 
 export const client = new ProductService(
-    "localhost:50051",
+    "localhost:9090",
     credentials.createInsecure()
 );

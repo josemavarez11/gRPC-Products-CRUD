@@ -2,50 +2,66 @@ import { client } from "../client.js";
 
 export class CrudController{
 
-    static async createProduct(req, res){ //C
+    static async createProduct(req, res){
         const { productDescription } = req.params;
-        await client.create({description: productDescription}, (error, response) => {
-            if(error){
-                console.error("Error al agregar el producto ", error.message)
-                res.status(500).send("Error al agregar el producto")
-            } else{
-                res.status(201).send("Producto agregado correctamente")
-            }
+        await fetch('http://localhost:2346/products', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ description: productDescription })
+        })
+        .then(response => response.json())
+        .then(data => {
+            return res.status(201).send(data)
+        })
+        .catch(error => {
+            console.error("error creando producto:", error.message)
+            return res.status(500).send("error creando producto")
         })
     }
-    
-    static async readProducts(req, res){ //R
-        await client.read({}, (error, response) => {
-            if(error){
-                console.error("Error al obtener los productos ", error.message)
-                res.status(500).send("Error al obtener los productos")
-            } else{
-                res.status(200).send(response.product)
-            }
-        });
+
+    static async readProducts(req, res){
+        await fetch('http://localhost:2346/products', { method: 'GET' })
+        .then(response => response.json())
+        .then(data => {
+            return res.status(200).send(data)
+        })
+        .catch(error => {
+            console.error("Error al obtener los productos ", error.message)
+            return res.status(500).send("Error al obtener los productos")
+        })
     }
 
     static async updateProduct(req, res){
         const { productId, productDescription } = req.params;
-        await client.update({id: productId, description: productDescription}, (error, response) => {
-            if(error){
-                console.error("Error al actualizar el producto ", error.message)
-                res.status(500).send("Error al obtener los productos")
-            } else{
-                res.status(200).send("Producto actualizado correctamente")
-            }
+        await fetch(`http://localhost:2346/products/${productId}`, { 
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ description: productDescription })
+        })
+        .then(response => response.json())
+        .then(data => {
+            return res.status(200).send(data)
+        })
+        .catch(error => {
+            console.error("Error actualizando producto", error.message)
+            return res.status(500).send("Error actualizando producto")
         })
     }
 
-    static async deleteProduct(req, res){ //D
+    static async deleteProduct(req, res){
         const { productId } = req.params;
-        await client.delete({id: productId}, (error, response) => {
-            if(error){
-                console.error("Error al borrar el producto", error.message)
-                res.status(500).send("Error al obtener los productos")
-            } else{
-                res.status(200).send("Producto borrado correctamente")
-            }
+        await fetch(`http://localhost:2346/products/${productId}`, { method: 'DELETE' })
+        .then(response => response.json())
+        .then(data => {
+            return res.status(200).send(data)
+        })
+        .catch(error => {
+            console.error("Error borrando producto", error.message)
+            return res.status(500).send("Error borrando producto")
         })
     }
 }
